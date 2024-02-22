@@ -14,14 +14,14 @@ class UserController extends Controller
     {
         $validator=Validator::make($request->all(),[
             'name'=>"required|string",
-            'email'=>"required|string",
+            'email'=>"required|string|unique:users",
             'phone'=>"required|numeric",
             'password'=>"required|min:6"
           
         ]);
         if($validator->fails()){
             $resul = array('status' => false, 'message' => "something went wrong",
-            'error_message'=>$validator->error());
+            'error_message'=>$validator->errors());
             return response()->json($resul,400);
         }
 
